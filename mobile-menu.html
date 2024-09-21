@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Mobile Navigation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typicons.font@2.0.9/src/font/typicons.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* General Styles */
+        .content {
+            padding: 20px;
+            background-color: #f8f9fa;
+            min-height: 100vh;
+        }
+
+        /* Hamburger Button */
+        .hamburger-menu {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .hamburger-menu div {
+            width: 35px;
+            height: 4px;
+            background-color: #333;
+            margin: 6px 0;
+            border-radius: 2px;
+            transition: 0.4s;
+        }
+
+        /* Side Navigation (Sliding from Left) */
+        .side-nav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #fff;
+            overflow-x: hidden;
+            transition: 0.5s;
+            z-index: 1000;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+            padding-top: 60px;
+        }
+
+        .side-nav a {
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            transition: 0.3s;
+        }
+
+        .side-nav a:hover, .side-nav a.active {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        /* Close Button */
+			.close-btn {
+			position: absolute;
+			top: 13px;
+			Right: 0px;
+			color: #fff;
+			cursor: pointer;
+			padding: 0px 14px;
+			background-color: blue;
+			font-size: 25px;
+			border-radius:5px;
+			}
+        /* Menu Open State */
+        .menu-open {
+            width: 100%; /* Full width */
+        }
+
+        /* Menu Icon Styles (Typicons) */
+        .menu-icons {
+            font-size: 24px;
+            margin-right: 15px;
+        }
+
+        /* Submenu Styles */
+        .submenu {
+            display: none;
+            padding-left: 20px;
+        }
+
+        /* Show submenu on active parent */
+        .side-nav a.active + .submenu {
+            display: block;
+        }
+
+        /* Parent-Child Indicator */
+        .indicator {
+            margin-left: auto;
+        }
+
+        /* Responsive: Only show the menu on smaller screens */
+        @media (max-width: 768px) {
+            .hamburger-menu {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Hamburger Icon (Top Right) -->
+<div class="hamburger-menu" id="hamburger">
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+
+<!-- Side Navigation (Sliding from Left) -->
+<div class="side-nav" id="sideNav">
+    <!-- Close Button -->
+    <span class="close-btn" id="closeBtn">&times;</span>
+    
+    <!-- Menu Links -->
+    <a href="#" class="active"><i class="typcn typcn-home-outline menu-icons"></i>Home</a>
+    <a href="#"><i class="typcn typcn-th-list-outline menu-icons"></i>Categories<span class="indicator">▸</span></a>
+        <div class="submenu">
+            <a href="#">Category 1</a>
+            <a href="#">Category 2</a>
+            <a href="#">Category 3</a>
+        </div>
+    <a href="#"><i class="typcn typcn-user-outline menu-icons"></i>Profile</a>
+    <a href="#"><i class="typcn typcn-cog-outline menu-icons"></i>Settings<span class="indicator">▸</span></a>
+        <div class="submenu">
+            <a href="#">Account Settings</a>
+            <a href="#">Privacy Settings</a>
+        </div>
+    <a href="#"><i class="typcn typcn-heart-outline menu-icons"></i>Favorites</a>
+    <a href="#"><i class="typcn typcn-bell-outline menu-icons"></i>Notifications</a>
+    <a href="#"><i class="typcn typcn-info-outline menu-icons"></i>About Us</a>
+    <a href="#"><i class="typcn typcn-log-out-outline menu-icons"></i>Logout</a>
+</div>
+
+<!-- Main Content -->
+<div class="content">
+    <h1>Premium Mobile Navigation</h1>
+    <p>Slide out the menu by tapping the hamburger icon.</p>
+</div>
+
+<!-- JavaScript for Sliding Menu -->
+<script>
+    const hamburger = document.getElementById('hamburger');
+    const sideNav = document.getElementById('sideNav');
+    const closeBtn = document.getElementById('closeBtn');
+
+    // Open the menu
+    hamburger.addEventListener('click', () => {
+        sideNav.classList.add('menu-open');
+    });
+
+    // Close the menu
+    closeBtn.addEventListener('click', () => {
+        sideNav.classList.remove('menu-open');
+    });
+
+    // Toggle submenu
+    document.querySelectorAll('.side-nav > a').forEach(item => {
+        item.addEventListener('click', function() {
+            // Close any open submenus
+            const submenu = this.nextElementSibling;
+            if (submenu) {
+                submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
+            }
+
+            // Toggle active class
+            this.classList.toggle('active');
+        });
+    });
+</script>
+
+</body>
+</html>
